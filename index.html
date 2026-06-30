@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StepStyle - Premium Footwear | Modern Shoes for Every Occasion</title>
+    <meta name="description" content="StepStyle - Premium footwear brand offering men's, women's, and kids' shoes including sneakers, running shoes, boots, and more.">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="nav-logo">
+                <a href="index.html">
+                    <i class="fas fa-shoe-prints"></i>
+                    <span>StepStyle</span>
+                </a>
+            </div>
+
+            <!-- Nav Menu -->
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="shop.html" class="nav-link">Shop</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link">Categories <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-content">
+                            <a href="shop.html?category=mens">Men's Shoes</a>
+                            <a href="shop.html?category=womens">Women's Shoes</a>
+                            <a href="shop.html?category=kids">Kids' Shoes</a>
+                            <a href="shop.html?category=sports">Sports Shoes</a>
+                            <a href="shop.html?category=running">Running Shoes</a>
+                            <a href="shop.html?category=boots">Boots</a>
+                            <a href="shop.html?category=sandals">Sandals</a>
+                            <a href="shop.html?category=sneakers">Sneakers</a>
+                        </div>
+                    </li>
+                    <li><a href="shop.html?sort=new" class="nav-link">New Arrivals</a></li>
+                    <li><a href="shop.html?sort=bestseller" class="nav-link">Best Sellers</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Right Nav Items -->
+            <div class="nav-right">
+                <!-- Search Bar -->
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+
+                <!-- Icons -->
+                <div class="nav-icons">
+                    <a href="wishlist.html" class="icon-btn" title="Wishlist">
+                        <i class="far fa-heart"></i>
+                        <span class="badge" id="wishlistBadge">0</span>
+                    </a>
+                    <a href="cart.html" class="icon-btn" title="Shopping Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cartBadge">0</span>
+                    </a>
+                    <a href="account.html" class="icon-btn" title="Account">
+                        <i class="far fa-user"></i>
+                    </a>
+                    <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slider" id="heroSlider">
+            <div class="hero-slide active" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
+                <div class="hero-content">
+                    <h1 class="hero-title">Step Into Style</h1>
+                    <p class="hero-subtitle">Discover premium footwear for every moment of your life</p>
+                    <a href="shop.html" class="btn btn-primary btn-large">Shop Now</a>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/images/hero-1.jpg" alt="Hero Banner 1" loading="lazy">
+                </div>
+            </div>
+
+            <div class="hero-slide" style="background: linear-gradient(135deg, #1a4d1a 0%, #2d7a2d 100%);">
+                <div class="hero-content">
+                    <h1 class="hero-title">Summer Collection</h1>
+                    <p class="hero-subtitle">50% OFF on Selected Items - Limited Time Only</p>
+                    <a href="shop.html?sort=discount" class="btn btn-primary btn-large">View Collection</a>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/images/hero-2.jpg" alt="Hero Banner 2" loading="lazy">
+                </div>
+            </div>
+
+            <div class="hero-slide" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+                <div class="hero-content">
+                    <h1 class="hero-title">Premium Running Shoes</h1>
+                    <p class="hero-subtitle">Engineered for speed, comfort, and performance</p>
+                    <a href="shop.html?category=running" class="btn btn-primary btn-large">Explore</a>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/images/hero-3.jpg" alt="Hero Banner 3" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Controls -->
+        <div class="hero-controls">
+            <button class="hero-prev" onclick="changeHeroSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="hero-dots" id="heroDots"></div>
+            <button class="hero-next" onclick="changeHeroSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Collection Section -->
+    <section class="featured-collection">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Collection</h2>
+                <p>Handpicked favorites from our latest collection</p>
+            </div>
+
+            <div class="products-grid" id="featuredProducts">
+                <!-- Products will be loaded dynamically -->
+            </div>
+
+            <div class="text-center">
+                <a href="shop.html" class="btn btn-secondary">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2>Shop by Category</h2>
+                <p>Find exactly what you're looking for</p>
+            </div>
+
+            <div class="categories-grid">
+                <a href="shop.html?category=mens" class="category-card">
+                    <div class="category-image">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <h3>Men's Shoes</h3>
+                    <p>Classic to contemporary</p>
+                </a>
+
+                <a href="shop.html?category=womens" class="category-card">
+                    <div class="category-image">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <h3>Women's Shoes</h3>
+                    <p>Elegant & comfortable</p>
+                </a>
+
+                <a href="shop.html?category=kids" class="category-card">
+                    <div class="category-image">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <h3>Kids' Shoes</h3>
+                    <p>Fun & durable</p>
+                </a>
+
+                <a href="shop.html?category=sports" class="category-card">
+                    <div class="category-image">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <h3>Sports Shoes</h3>
+                    <p>Performance gear</p>
+                </a>
+
+                <a href="shop.html?category=running" class="category-card">
+                    <div class="category-image">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <h3>Running Shoes</h3>
+                    <p>Built for speed</p>
+                </a>
+
+                <a href="shop.html?category=boots" class="category-card">
+                    <div class="category-image">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <h3>Boots</h3>
+                    <p>Stylish & sturdy</p>
+                </a>
+
+                <a href="shop.html?category=sandals" class="category-card">
+                    <div class="category-image">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <h3>Sandals</h3>
+                    <p>Casual comfort</p>
+                </a>
+
+                <a href="shop.html?category=sneakers" class="category-card">
+                    <div class="category-image">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <h3>Sneakers</h3>
+                    <p>Urban style</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flash Sale Section -->
+    <section class="flash-sale">
+        <div class="container">
+            <div class="flash-sale-header">
+                <h2>⚡ Flash Sale</h2>
+                <p>Limited time offers ending in:</p>
+                <div class="countdown-timer" id="countdownTimer">
+                    <div class="timer-item">
+                        <span class="timer-value" id="days">00</span>
+                        <span class="timer-label">Days</span>
+                    </div>
+                    <div class="timer-item">
+                        <span class="timer-value" id="hours">00</span>
+                        <span class="timer-label">Hours</span>
+                    </div>
+                    <div class="timer-item">
+                        <span class="timer-value" id="minutes">00</span>
+                        <span class="timer-label">Minutes</span>
+                    </div>
+                    <div class="timer-item">
+                        <span class="timer-value" id="seconds">00</span>
+                        <span class="timer-label">Seconds</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="products-grid" id="flashSaleProducts">
+                <!-- Flash sale products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers Section -->
+    <section class="best-sellers">
+        <div class="container">
+            <div class="section-header">
+                <h2>Best Sellers</h2>
+                <p>Customer favorites you shouldn't miss</p>
+            </div>
+
+            <div class="products-grid" id="bestSellerProducts">
+                <!-- Best seller products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section class="new-arrivals">
+        <div class="container">
+            <div class="section-header">
+                <h2>New Arrivals</h2>
+                <p>Latest additions to our collection</p>
+            </div>
+
+            <div class="products-grid" id="newArrivalsProducts">
+                <!-- New arrival products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+                <p>Real reviews from real customers</p>
+            </div>
+
+            <div class="testimonials-carousel" id="testimonialsCarousel">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"StepStyle shoes are incredibly comfortable and stylish. I've recommended them to all my friends!"</p>
+                    <div class="testimonial-author">
+                        <h4>Sarah Johnson</h4>
+                        <p>Verified Buyer</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Best running shoes I've ever owned. The quality and durability are outstanding!"</p>
+                    <div class="testimonial-author">
+                        <h4>Michael Chen</h4>
+                        <p>Verified Buyer</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Fantastic customer service and fast delivery. Will definitely shop again!"</p>
+                    <div class="testimonial-author">
+                        <h4>Emma Williams</h4>
+                        <p>Verified Buyer</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The variety of styles and sizes is amazing. Finally found shoes that fit perfectly!"</p>
+                    <div class="testimonial-author">
+                        <h4>David Smith</h4>
+                        <p>Verified Buyer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Subscribe to Our Newsletter</h2>
+                <p>Get exclusive offers, new arrivals, and style tips delivered to your inbox</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+                <p class="newsletter-note">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <h4>About StepStyle</h4>
+                    <p>Premium footwear for every occasion. Quality, style, and comfort combined.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Policies -->
+                <div class="footer-section">
+                    <h4>Policies</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Fashion Street, New York, NY 10001</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> support@stepstyle.com</p>
+                    <p><i class="fas fa-clock"></i> Mon - Fri: 9AM - 6PM EST</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 StepStyle. All rights reserved.</p>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/wishlist.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>

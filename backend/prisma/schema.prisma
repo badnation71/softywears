@@ -1,0 +1,281 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User and Authentication
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  password  String
+  firstName String?
+  lastName  String?
+  phone     String?
+  role      UserRole   @default(CUSTOMER)
+  status    UserStatus @default(ACTIVE)
+  isVerified Boolean   @default(false)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  // Relations
+  orders    Order[]
+  wishlist  Wishlist[]
+  reviews   Review[]
+  addresses Address[]
+  payments  Payment[]
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+// Categories
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  description String?
+  imageUrl  String?
+  parentId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  parent    Category?  @relation("CategoryToParent", fields: [parentId], references: [id])
+  subcategories Category[] @relation("CategoryToParent")
+  products  Product[]
+}
+
+// Products
+model Product {
+  id              String   @id @default(cuid())
+  name            String
+  description     String?
+  categoryId      String
+  priceTzs        Float
+  priceKes        Float
+  images          String[] // JSON array of image URLs
+  materials       String? // JSON object
+  stockQuantity   Int      @default(0)
+  rating          Float    @default(0)
+  reviewCount     Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  category    Category        @relation(fields: [categoryId], references: [id])
+  variants    ProductVariant[]
+  orderItems  OrderItem[]
+  wishlist    Wishlist[]
+  reviews     Review[]
+  comparisons ProductComparison[]
+}
+
+model ProductVariant {
+  id              String   @id @default(cuid())
+  productId       String
+  size            String
+  color           String
+  stockQuantity   Int      @default(0)
+  sku             String   @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  product   Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+}
+
+// Orders
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique
+  userId          String
+  totalAmountTzs  Float
+  totalAmountKes  Float
+  subtotalTzs     Float
+  subtotalKes     Float
+  shippingCostTzs Float       @default(0)
+  shippingCostKes Float       @default(0)
+  discountTzs     Float       @default(0)
+  discountKes     Float       @default(0)
+  status          OrderStatus @default(PENDING)
+  paymentStatus   PaymentStatus @default(PENDING)
+  deliveryAddress String
+  deliveryMethod  DeliveryMethod
+  city            String
+  region          String?
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relations
+  user       User        @relation(fields: [userId], references: [id])
+  items      OrderItem[]
+  payments   Payment[]
+  coupon     Coupon?     @relation(fields: [couponId], references: [id])
+  couponId   String?
+}
+
+model OrderItem {
+  id              String   @id @default(cuid())
+  orderId         String
+  productId       String
+  variantId       String
+  quantity        Int
+  priceAtPurchase Float
+  createdAt       DateTime @default(now())
+
+  // Relations
+  order   Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product        @relation(fields: [productId], references: [id])
+  variant ProductVariant @relation(fields: [variantId], references: [id])
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  RETURNED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum DeliveryMethod {
+  STANDARD
+  EXPRESS
+  PICKUP
+}
+
+// Payments
+model Payment {
+  id                  String        @id @default(cuid())
+  orderId             String        @unique
+  userId              String
+  amountTzs           Float?
+  amountKes           Float?
+  method              PaymentMethod
+  status              PaymentStatus @default(PENDING)
+  mpesaTransactionId  String?
+  mpesaPhoneNumber    String?
+  mpesaResponse       String? // JSON response from M-Pesa
+  cardLast4           String?
+  cardBrand           String?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  // Relations
+  order User @relation(fields: [userId], references: [id])
+}
+
+enum PaymentMethod {
+  MPESA
+  CARD
+  CASH_ON_DELIVERY
+}
+
+// Reviews
+model Review {
+  id                String   @id @default(cuid())
+  productId         String
+  userId            String
+  rating            Int      // 1-5
+  comment           String?
+  verifiedPurchase  Boolean  @default(false)
+  helpfulCount      Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+}
+
+// Wishlist
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  // Relations
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
+// Coupons/Discounts
+model Coupon {
+  id                  String   @id @default(cuid())
+  code                String   @unique
+  discountType        DiscountType // PERCENTAGE or FIXED
+  discountValue       Float
+  minPurchaseAmount   Float?   @default(0)
+  maxUses             Int?     @default(null) // null for unlimited
+  currentUses         Int      @default(0)
+  expiresAt           DateTime?
+  isActive            Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Relations
+  orders Order[]
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FIXED
+}
+
+// Addresses
+model Address {
+  id        String   @id @default(cuid())
+  userId    String
+  street    String
+  city      String
+  region    String?
+  postalCode String?
+  country   String
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Product Comparison
+model ProductComparison {
+  id        String   @id @default(cuid())
+  productId String
+  userId    String?
+  sessionId String?
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  // Relations
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}

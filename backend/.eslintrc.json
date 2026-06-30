@@ -1,0 +1,11 @@
+{
+  "extends": "./src/.eslintrc.base.json",
+  "env": {
+    "node": true,
+    "es2020": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  }
+}
